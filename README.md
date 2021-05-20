@@ -51,10 +51,10 @@ If any doubts here's a link to some more explanations: [Pipenv](https://pipenv-f
 
 ## :video_game: Play the game
 
-- Download the project, open the terminal window on folder with '**app_rects.py**' and type:
+- Download the project, open the terminal window on folder with '**flappy_bird_1.py**' and type:
 
 ```
-python app_rects.py
+python flappy_bird_1.py
 ```
 
 Enjoy the game :smiley:
