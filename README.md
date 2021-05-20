@@ -51,6 +51,14 @@ If any doubts here's a link to some more explanations: [Pipenv](https://pipenv-f
 
 ## :video_game: Play the game
 
+- Download the project, open the terminal window on folder with '**app_rects.py**' and type:
+
+```
+python app_rects.py
+```
+
+Enjoy the game :smiley:
+
 I am making two versions of this game, one using only rectangles, and other with images.
 Currently the one you can play is with rectangles.
 
