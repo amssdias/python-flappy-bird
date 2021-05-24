@@ -44,7 +44,6 @@ floor = pygame.draw.line(screen, WHITE, (0, SCREEN_HEIGHT - 100), (SCREEN_WIDTH,
 # So user can't jump anymore
 game_over = False
 
-
 running = True
 while running:
 
