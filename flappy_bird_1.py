@@ -33,6 +33,11 @@ block_2 = create_block(SCREEN_WIDTH + 300)
 blocks = block_1 + block_2
 block_speed = 1
 
+# Create point
+score = 0
+coin_1 = pygame.Rect(block_1[0].left + 30, block_1[0].height + 45, 10, 10)
+coin_2 = pygame.Rect(block_2[0].left + 30, block_2[0].height + 45, 10, 10)
+
 # Draw floor (surface, color, start_pos, end_pos, width)
 floor = pygame.draw.line(screen, WHITE, (0, SCREEN_HEIGHT - 100), (SCREEN_WIDTH, SCREEN_HEIGHT - 100), width=5)
 
@@ -58,7 +63,8 @@ while running:
     pygame.draw.rect(screen, WHITE, floor)
     for block in blocks:
         pygame.draw.rect(screen, WHITE, block)
-
+    pygame.draw.rect(screen, WHITE, coin_1)
+    pygame.draw.rect(screen, WHITE, coin_2)
 
     # If bird jumps
     if jumping:
@@ -74,13 +80,19 @@ while running:
     block_1[1].x -= block_speed
     block_2[0].x -= block_speed
     block_2[1].x -= block_speed
+    coin_1.x -= block_speed
+    coin_2.x -= block_speed
 
     # If blocks go out of the screen
     if block_1[0].x and block_1[1].x <= -70:
         place_block(block_1[0], block_1[1], SCREEN_WIDTH)
+        coin_1.left = block_1[0].left + 30
+        coin_1.top = block_1[0].height + 45
 
     if block_2[0].x and block_2[1].x <= -70:
         place_block(block_2[0], block_2[1], SCREEN_WIDTH)
+        coin_2.left = block_2[0].left + 30
+        coin_2.top = block_2[0].height + 45
 
 
     # If player touches floor or building blocks
@@ -93,6 +105,16 @@ while running:
         screen.blit(GAME_OVER_TEXT, (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
         game_over = True
         
+    if bird.colliderect(coin_1) or bird.colliderect(coin_2):
+        score += 1
+        if bird.colliderect(coin_1):
+            coin_1.x = -10
+        else:
+            coin_2.x = -10
+
+    score_text = FONT.render(f"Score: {score}", False, WHITE, BLACK)
+    screen.blit(score_text, (20, 20))
+    
     
     pygame.display.update()
     clock.tick(60)
