@@ -1,11 +1,9 @@
 import pygame
 import random
 
-from version_2.app_img_funcs import create_img_surface, place_block, resize_block, display_img
+from version_2.app_img_funcs import create_img_surface, resize_block
 
 # TODO
-# Create one more block and make him move
-    # If block goes out of the width screen, make him go back
 # Move player with variables (speed, width and height) so we can track position of player
 # Check if player hitted the floor, or pipes
 # Create coins to build score
@@ -32,15 +30,25 @@ pygame.display.set_icon(icon)
 
 # Create player/bird (left, top, width, height)
 PLAYER_IMAGE = create_img_surface("media/bird.png")
-player_speed = 2
+player_y = 2
 jumping = False
 
 
-# Create buildind blocks
-block_1 = resize_block(create_img_surface("media/pipe.png"))
-block_y_1 = [0, block_1[0].get_height() + 150]
-block_x = SCREEN_WIDTH
-blocks_speed = 1
+# Create buildind blocks -> [[top, bottom], [top, bottom]...]
+block_img = create_img_surface("media/pipe.png")
+blocks = [
+    resize_block(block_img), 
+    resize_block(block_img), 
+    resize_block(block_img)
+]
+
+blocks_y = [
+    [0, blocks[0][0].get_height() + 150],
+    [0, blocks[1][0].get_height() + 150],
+    [0, blocks[2][0].get_height() + 150]
+]
+
+blocks_x = [SCREEN_WIDTH, SCREEN_WIDTH + 250, SCREEN_WIDTH + 450]
 
 # Create point
 score = 0
@@ -66,8 +74,10 @@ while running:
     # Draw into the screen
     screen.fill(SKY)
     # screen.blit(BACKGROUND, (0, 0))
-    display_img(screen, block_1[0], block_x, block_y_1[0])
-    display_img(screen, block_1[1], block_x, block_y_1[1])
+    for index, block in enumerate(blocks):
+        screen.blit(block[0], (blocks_x[index], blocks_y[index][0]))
+        screen.blit(block[1], (blocks_x[index], blocks_y[index][1]))
+
     pygame.draw.rect(screen, WHITE, floor)
     # pygame.draw.rect(screen, WHITE, coin_1)
     # pygame.draw.rect(screen, WHITE, coin_2)
@@ -78,18 +88,26 @@ while running:
     if jumping:
         end_of_jump = pygame.time.get_ticks()
 
-        screen.blit(PLAYER_IMAGE, (30, player_speed))
-        player_speed -= 4
+        screen.blit(PLAYER_IMAGE, (30, player_y))
+        player_y -= 4
 
         if end_of_jump - start_of_jump >= 200:
             jumping = False
     else:
-        screen.blit(PLAYER_IMAGE, (30, player_speed))
-        player_speed += 2
+        screen.blit(PLAYER_IMAGE, (30, player_y))
+        player_y += 2
 
 
     # Make blocks move
-    block_x -= 1
+    for index, x in enumerate(blocks_x):
+        blocks_x[index] -= 2
+
+    # If blocks go out of screen width (block width = 200)
+    for index, x in enumerate(blocks_x):
+        if x <= -200:
+            blocks[index] = resize_block(block_img)
+            blocks_y[index][1] = blocks[index][0].get_height() + 150
+            blocks_x[index] = SCREEN_WIDTH + 30
 
     # If bird touches bottom of screen
 
