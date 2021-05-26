@@ -1,5 +1,6 @@
-import random
 from pygame import Rect, image, transform
+
+import random
 
 block_total_height = 500
 
