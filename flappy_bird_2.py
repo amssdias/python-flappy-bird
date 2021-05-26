@@ -8,7 +8,6 @@ from version_2.sprites_class import Player, Blocks_top, Blocks_bottom
 # Create sprite for blocks
     # Create different widths for each block
     # Update them to move
-
 # Check if player hitted the floor, or blocks
 # Create coins to build score
 
