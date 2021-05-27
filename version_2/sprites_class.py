@@ -16,32 +16,34 @@ class Player(Sprite):
             self.rect.y += 4
 
 
-class Blocks_top(Sprite):
+class Block(Sprite):
     """
         Space where bird can pass is 150
-        Total height of block is 600 - 100(floor) - 150
+        Total height of block is 500 - 150
     """
+    width = 200
 
     def __init__(self, path, height, pos_x):
         super().__init__()
         self.original_image = image.load(path)
-        self.image = transform.scale(self.original_image, (200, height))
+        self.image = transform.scale(self.original_image, (self.width, height))
         self.rect = self.image.get_rect()
+        self.rect.x = pos_x
+
+    def update(self):
+        self.rect.x -= 3
+
+        if self.rect.x <= -(self.width):
+            self.rect.x = 600
+
+
+class BlockTop(Block):
+    def __init__(self, path, height, pos_x):
+        super().__init__(path, height, pos_x)
         self.rect.y = 0
-        self.rect.x = pos_x
-
-    def update(self):
-        self.rect.x -= 3
 
 
-class Blocks_bottom(Sprite):
+class BlockBottom(Block):
     def __init__(self, path, height, pos_x, pos_y):
-        super().__init__()
-        self.original_image = image.load(path)
-        self.image = transform.scale(self.original_image, (200, height))
-        self.rect = self.image.get_rect()
-        self.rect.x = pos_x
+        super().__init__(path, height, pos_x)
         self.rect.y = pos_y
-
-    def update(self):
-        self.rect.x -= 3

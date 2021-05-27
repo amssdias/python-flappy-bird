@@ -1,8 +1,7 @@
 import pygame
 import random
 
-from version_2.app_img_funcs import create_img_surface, resize_block
-from version_2.sprites_class import Player, Blocks_top, Blocks_bottom
+from version_2.sprites_class import Player, BlockTop, BlockBottom
 
 # TODO
 # Create sprite for blocks
@@ -20,7 +19,7 @@ SCREEN_WIDTH, SCREEN_HEIGHT = 500, 600
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 SKY = (102, 123, 249)
-BACKGROUND = create_img_surface("media/back.jpg")
+BACKGROUND = pygame.image.load("media/back.jpg")
 BACKGROUND = pygame.transform.scale(BACKGROUND, (500, 600))
 FONT = pygame.font.Font("freesansbold.ttf", 22)
 GAME_OVER_TEXT = FONT.render("GAME OVER", False, WHITE, BLACK)
@@ -28,7 +27,7 @@ GAME_OVER_TEXT = FONT.render("GAME OVER", False, WHITE, BLACK)
 # Screen settings
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Flappy bird")
-icon = create_img_surface("media/logo.jpg")
+icon = pygame.image.load("media/logo.jpg")
 pygame.display.set_icon(icon)
 
 # Create player
@@ -40,8 +39,8 @@ random_height = random.randint(100, 250)
 blocks = []
 
 for i in range(3):
-    block_top = Blocks_top("media/pipe.png", random_height, SCREEN_WIDTH)
-    block_bottom = Blocks_bottom("media/pipe.png", 350 - random_height, SCREEN_WIDTH, block_top.rect.bottom + 150)
+    block_top = BlockTop("media/pipe.png", random_height, SCREEN_WIDTH)
+    block_bottom = BlockBottom("media/pipe.png", 350 - random_height, SCREEN_WIDTH, block_top.rect.bottom + 150)
     blocks.append([block_top, block_bottom])
 
 
