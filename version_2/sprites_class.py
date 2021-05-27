@@ -1,6 +1,7 @@
 from pygame.sprite import Sprite
 from pygame import image, transform
 
+import random
 
 class Player(Sprite):
     def __init__(self, path):
@@ -32,9 +33,9 @@ class Block(Sprite):
 
     def update(self):
         self.rect.x -= 3
-
         if self.rect.x <= -(self.width):
-            self.rect.x = 600
+            self.rect.x = 500
+
 
 
 class BlockTop(Block):

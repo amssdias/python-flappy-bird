@@ -5,8 +5,10 @@ from version_2.sprites_class import Player, BlockTop, BlockBottom
 
 # TODO
 # Create sprite for blocks
-    # Create different widths for each block
+    # Create different position X
+    # Create different heights for each
     # Update them to move
+        # When block goes out of the screen, change to beggining
 # Check if player hitted the floor, or blocks
 # Create coins to build score
 
@@ -36,11 +38,13 @@ jumping = False
 
 # Create blocks
 random_height = random.randint(100, 250)
+position_x = 500
 blocks = []
 
 for i in range(3):
-    block_top = BlockTop("media/pipe.png", random_height, SCREEN_WIDTH)
-    block_bottom = BlockBottom("media/pipe.png", 350 - random_height, SCREEN_WIDTH, block_top.rect.bottom + 150)
+    block_top = BlockTop(path="media/pipe.png", height=random_height, pos_x=position_x)
+    block_bottom = BlockBottom(path="media/pipe.png", height=350 - random_height, pos_x=position_x, pos_y=block_top.rect.bottom + 150)
+    position_x += 250
     blocks.append([block_top, block_bottom])
 
 
@@ -48,7 +52,7 @@ all_sprites = pygame.sprite.Group()
 block_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 
-for block_top, block_b in blocks:
+for block_top, block_bottom in blocks:
     all_sprites.add(block_top, block_bottom)
     block_sprites.add(block_top, block_bottom)
 
